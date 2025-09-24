@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../mixins/validation_mixin.dart';
 
 class LoginScreen extends StatefulWidget {
   createState() {
@@ -6,7 +7,7 @@ class LoginScreen extends StatefulWidget {
   }
 }
 
-class LoginScreenState extends State<LoginScreen> {
+class LoginScreenState extends State<LoginScreen> with ValidationMixin {
   final formKey = GlobalKey<FormState>();
   String email = '';
   String password = '';
@@ -35,11 +36,7 @@ class LoginScreenState extends State<LoginScreen> {
         label: Text('Email'),
         hintText: 'you@example.com',
       ),
-      validator: (value) {
-        if (value == null || !value.contains('@')) {
-          return 'invalid email address';
-        }
-      },
+      validator: validateEmail,
       onSaved: (newValue) {
         email = newValue ?? '';
       },
@@ -54,11 +51,7 @@ class LoginScreenState extends State<LoginScreen> {
         label: Text('Password'),
         hintText: 'password',
       ),
-      validator: (value) {
-        if (value == null || value.length < 4) {
-          return 'password must at least be 4';
-        }
-      },
+      validator: validatePassword,
       onSaved: (newValue) {
         password = newValue ?? '';
       },
